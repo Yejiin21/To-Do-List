@@ -1,15 +1,21 @@
 //atom: 단순 배열, selector: atom의 output을 변형시킴
 import { atom, selector } from "recoil";
 
+export enum Categories {
+  "TO_DO",
+  "DOING",
+  "DONE",
+}
+
 export interface IToDo {
   text: string;
   id: number;
-  category: "TO_DO" | "DOING" | "DONE";
+  category: Categories;
 }
 
-export const categoryState = atom({
+export const categoryState = atom<Categories>({
   key: "category",
-  default: "TO_DO",
+  default: Categories.TO_DO,
 });
 
 export const toDoState = atom<IToDo[]>({
