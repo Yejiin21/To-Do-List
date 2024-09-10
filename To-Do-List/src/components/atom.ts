@@ -1,5 +1,17 @@
 //atom: 단순 배열, selector: atom의 output을 변형시킴
 import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+  key: "localStorage",
+  storage: localStorage,
+});
+
+export const toDoState = atom<IToDo[]>({
+  key: "toDoState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
 
 export enum Categories {
   "TO_DO" = "TO_DO",
@@ -16,11 +28,6 @@ export interface IToDo {
 export const categoryState = atom<Categories>({
   key: "category",
   default: Categories.TO_DO,
-});
-
-export const toDoState = atom<IToDo[]>({
-  key: "toDo",
-  default: [],
 });
 
 export const toDoSelector = selector({

@@ -17,6 +17,12 @@ function ToDo({ text, category, id }: IToDo) {
       ];
     });
   };
+  const handleDelete = () => {
+    setToDos((oldToDos) => {
+      const newToDos = oldToDos.filter((toDo) => toDo.id !== id);
+      return newToDos;
+    });
+  };
   return (
     <li>
       <span>{text}</span>
@@ -35,6 +41,7 @@ function ToDo({ text, category, id }: IToDo) {
           Done
         </button>
       )}
+      <button onClick={handleDelete}>Delete</button>
     </li>
   );
 }
