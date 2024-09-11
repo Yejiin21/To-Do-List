@@ -1,5 +1,41 @@
 import { useSetRecoilState } from "recoil";
 import { Categories, IToDo, toDoState } from "./atom";
+import styled from "styled-components";
+
+const ToDoContainer = styled.li`
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+`;
+
+const ToDoText = styled.span`
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+
+const ButtonGroup = styled.div`
+  width: 90%;
+  margin-top: 10px;
+  display: flex;
+`;
+
+const Button = styled.button`
+  background-color: "#f0f0f0";
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  &:hover {
+    background-color: "#45a049";
+  }
+`;
 
 function ToDo({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);
@@ -24,25 +60,27 @@ function ToDo({ text, category, id }: IToDo) {
     });
   };
   return (
-    <li>
-      <span>{text}</span>
-      {category !== Categories.TO_DO && (
-        <button name={Categories.DOING} onClick={onClick}>
-          Doing
-        </button>
-      )}
-      {category !== Categories.TO_DO && (
-        <button name={Categories.TO_DO} onClick={onClick}>
-          To Do
-        </button>
-      )}
-      {category !== Categories.DONE && (
-        <button name={Categories.DONE} onClick={onClick}>
-          Done
-        </button>
-      )}
-      <button onClick={handleDelete}>Delete</button>
-    </li>
+    <ToDoContainer>
+      <ToDoText>{text}</ToDoText>
+      <ButtonGroup>
+        {category !== Categories.DOING && (
+          <Button name={Categories.DOING} onClick={onClick}>
+            Doing
+          </Button>
+        )}
+        {category !== Categories.TO_DO && (
+          <Button name={Categories.TO_DO} onClick={onClick}>
+            To Do
+          </Button>
+        )}
+        {category !== Categories.DONE && (
+          <Button name={Categories.DONE} onClick={onClick}>
+            Done
+          </Button>
+        )}
+        <Button onClick={handleDelete}>Delete</Button>
+      </ButtonGroup>
+    </ToDoContainer>
   );
 }
 export default ToDo;
